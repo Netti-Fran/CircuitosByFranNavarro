@@ -30,44 +30,95 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       max-width: 1400px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    .title { font-family: 'Barlow Condensed', sans-serif; font-size: 3.4rem; font-weight: 900; letter-spacing: -0.03em; text-align: center; flex: 1; }
+    .title { 
+      font-family: 'Barlow Condensed', sans-serif; 
+      font-size: 3.4rem; 
+      font-weight: 900; 
+      letter-spacing: -0.03em; 
+      text-align: center; 
+      flex: 1; 
+    }
 
     .admin-btn {
       background: #333;
       color: #aaa;
       border: none;
-      padding: 10px 16px;
+      padding: 10px 18px;
       border-radius: 30px;
       font-size: 1rem;
       cursor: pointer;
     }
-
     .admin-btn.active { background: #c026d3; color: white; }
 
-    .bloques { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; max-width: 1400px; margin: 0 auto; }
+    .bloques {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-    .bloque { background: var(--card); border-radius: 24px; padding: 2.4rem; border: 1px solid #222; }
+    .bloque {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 2.4rem;
+      border: 1px solid #222;
+    }
 
-    .exercise-list { font-size: 1.65rem; line-height: 2.4; font-weight: 500; }
-    .exercise-list li { padding: 14px 0; border-bottom: 1px solid #333; }
+    .bloque-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 1.8rem;
+    }
+
+    .icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .exercise-list {
+      font-size: 1.65rem;
+      line-height: 2.4;
+      font-weight: 500;
+    }
+
+    .exercise-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid #333;
+    }
 
     .register-card {
       background: var(--card);
       border-radius: 20px;
       padding: 2rem;
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       max-width: 1400px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    input { width: 100%; padding: 14px; margin: 8px 0; background: #1f1f1f; border: 1px solid #444; border-radius: 12px; color: white; font-size: 1.1rem; }
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      background: #1f1f1f;
+      border: 1px solid #444;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+    }
 
     .save-btn {
       background: var(--fuerza);
@@ -82,7 +133,11 @@
       margin-top: 10px;
     }
 
-    .records { margin-top: 1.5rem; max-height: 400px; overflow-y: auto; }
+    .records {
+      margin-top: 1.5rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
 
     .record-item {
       background: #1a1a1a;
@@ -98,8 +153,8 @@
       background: #e11d48;
       color: white;
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       font-size: 1.1rem;
       cursor: pointer;
@@ -107,11 +162,11 @@
 
     .qr-container {
       position: fixed;
-      bottom: 25px;
-      left: 25px;
+      bottom: 30px;
+      left: 30px;
       background: rgba(0,0,0,0.8);
-      padding: 10px;
-      border-radius: 14px;
+      padding: 12px;
+      border-radius: 16px;
     }
   </style>
 </head>
@@ -126,114 +181,41 @@
     </div>
   </div>
 
-  <!-- Bloques del circuito (igual que antes) -->
   <div class="bloques">
-    <div class="bloque fuerza"> ... (mismo contenido de bloques anterior) ... </div>
-    <div class="bloque complementos"> ... </div>
-    <div class="bloque core"> ... </div>
-  </div>
-
-  <!-- Registrar Marca -->
-  <div class="register-card">
-    <h2 style="margin-bottom:1rem; font-size:1.8rem;">📊 Registrar Marca - Peso Muerto</h2>
-    <input type="text" id="athlete-name" placeholder="Nombre del atleta" />
-    <input type="number" id="weight" placeholder="Peso usado (kg)" />
-    <button class="save-btn" onclick="saveRecord()">Guardar Marca</button>
-
-    <h3 style="margin: 1.8rem 0 1rem;">Marcas guardadas:</h3>
-    <div class="records" id="records-list"></div>
-  </div>
-
-  <!-- QR -->
-  <div class="qr-container">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://netti-fran.github.io/TU-REPOSITORIO/" alt="QR">
-  </div>
-
-  <script>
-    const ADMIN_PASSWORD = "fran123";   // ← Cambia esta contraseña cuando quieras
-    let isAdmin = false;
-
-    // Cargar marcas
-    function loadRecords() {
-      const records = JSON.parse(localStorage.getItem('pm_records') || '[]');
-      const list = document.getElementById('records-list');
-      
-      if (records.length === 0) {
-        list.innerHTML = '<p style="color:#666; text-align:center; padding:20px;">Aún no hay marcas guardadas.</p>';
-        return;
-      }
-
-      list.innerHTML = records.map((r, index) => `
-        <div class="record-item">
-          <div>
-            <strong>${r.name}</strong> — ${r.weight} kg 
-            <small style="color:#777;">(${r.date})</small>
-          </div>
-          ${isAdmin ? `<button class="delete-btn" onclick="deleteRecord(${index})">✕</button>` : ''}
+    <!-- Bloque de Fuerza -->
+    <div class="bloque fuerza">
+      <div class="bloque-header">
+        <div class="icon">🏋️</div>
+        <div>
+          <div style="font-size:1.9rem; font-weight:800; text-transform:uppercase;">Bloque de Fuerza</div>
+          <div style="color:#888;">3 personas</div>
         </div>
-      `).join('');
-    }
+      </div>
+      <div style="background:rgba(192,38,211,0.15); border:2px solid var(--fuerza); padding:1.8rem; border-radius:16px; text-align:center;">
+        <strong style="font-size:1.6rem;">Peso Muerto</strong><br>
+        <span style="background:var(--fuerza); color:white; padding:8px 24px; border-radius:50px; display:inline-block; margin-top:10px;">85% RM</span>
+      </div>
+    </div>
 
-    // Guardar marca
-    window.saveRecord = function() {
-      const name = document.getElementById('athlete-name').value.trim();
-      const weight = document.getElementById('weight').value.trim();
+    <!-- Bloque Complementos -->
+    <div class="bloque complementos">
+      <div class="bloque-header">
+        <div class="icon">🔄</div>
+        <div>
+          <div style="font-size:1.9rem; font-weight:800; text-transform:uppercase;">Circuito de Complementos</div>
+          <div style="color:#888;">4 personas • Rotación por estaciones</div>
+        </div>
+      </div>
+      <div class="exercise-list">
+        <ol>
+          <li>Remo unilateral mancuerna</li>
+          <li>Airbike</li>
+          <li>Push press + Puente glúteo unilateral</li>
+          <li>Farmer</li>
+        </ol>
+      </div>
+    </div>
 
-      if (!name || !weight) return alert("Completa nombre y peso");
-
-      const records = JSON.parse(localStorage.getItem('pm_records') || '[]');
-      records.unshift({
-        name: name,
-        weight: parseFloat(weight),
-        date: new Date().toLocaleDateString('es-ES')
-      });
-
-      localStorage.setItem('pm_records', JSON.stringify(records));
-      loadRecords();
-
-      document.getElementById('athlete-name').value = '';
-      document.getElementById('weight').value = '';
-    };
-
-    // Borrar marca (solo admin)
-    window.deleteRecord = function(index) {
-      if (!confirm("¿Seguro que quieres borrar esta marca?")) return;
-      
-      let records = JSON.parse(localStorage.getItem('pm_records') || '[]');
-      records.splice(index, 1);
-      localStorage.setItem('pm_records', JSON.stringify(records));
-      loadRecords();
-    };
-
-    // Activar modo Admin
-    document.getElementById('admin-btn').addEventListener('click', () => {
-      if (isAdmin) {
-        isAdmin = false;
-        document.getElementById('admin-btn').classList.remove('active');
-        alert("Modo Admin desactivado");
-      } else {
-        const pass = prompt("Introduce la contraseña de administrador:");
-        if (pass === ADMIN_PASSWORD) {
-          isAdmin = true;
-          document.getElementById('admin-btn').classList.add('active');
-          alert("✅ Modo Administrador activado");
-        } else {
-          alert("Contraseña incorrecta");
-        }
-      }
-      loadRecords(); // Actualizar vista
-    });
-
-    // Inicializar
-    loadRecords();
-
-    // Alto Contraste y Fullscreen (mismo de antes)
-    document.getElementById('contrast-btn').addEventListener('click', () => document.body.classList.toggle('high-contrast'));
-    
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-      else document.exitFullscreen();
-    });
-  </script>
-</body>
-</html>
+    <!-- Bloque Core -->
+    <div class="bloque core">
+     
