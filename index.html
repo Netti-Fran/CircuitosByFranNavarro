@@ -3,34 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Circuito de Entrenamiento</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;900&display=swap" rel="stylesheet">
+  <title>Circuito de Entrenamiento - Fran Navarro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0a0a;
-      --card: #121212;
-      --text: #f0f0f0;
-      --text2: #aaaaaa;
-      --accent: #00ff9d;
-      --fuerza: #a855f7;
-      --complementos: #22d3ee;
-      --core: #fbbf24;
+      --bg: #050505;
+      --card: #111111;
+      --text: #ffffff;
+      --text2: #bbbbbb;
+      --fuerza: #c026d3;
+      --complementos: #06b6d4;
+      --core: #eab308;
+      --accent: #22ff88;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Barlow', sans-serif;
       min-height: 100vh;
       padding: 2rem 1rem;
-      line-height: 1.5;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1180px; margin: 0 auto; }
 
     h1 {
       font-family: 'Barlow Condensed', sans-serif;
@@ -38,200 +35,158 @@
       text-align: center;
       margin-bottom: 3rem;
       font-weight: 900;
-      letter-spacing: -0.02em;
+      color: #ffffff;
     }
 
     .bloques {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.8rem;
     }
 
     .bloque {
       background: var(--card);
-      border-radius: 16px;
-      padding: 1.8rem;
+      border-radius: 18px;
+      padding: 2rem;
       border: 1px solid #222;
+      transition: all 0.3s;
     }
+
+    .bloque:hover { transform: translateY(-4px); border-color: #444; }
 
     .header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 1.5rem;
+      gap: 14px;
+      margin-bottom: 1.8rem;
     }
 
     .icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.8rem;
     }
 
-    .fuerza .icon   { background: rgba(168, 85, 247, 0.2); color: var(--fuerza); }
-    .complementos .icon { background: rgba(34, 211, 238, 0.2); color: var(--complementos); }
-    .core .icon     { background: rgba(251, 191, 36, 0.2); color: var(--core); }
+    .fuerza   .icon { background: #4c1d5e; color: var(--fuerza); }
+    .complementos .icon { background: #164e63; color: var(--complementos); }
+    .core     .icon { background: #713f12; color: var(--core); }
 
     .title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.65rem;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .subtitle {
-      color: var(--text2);
-      font-size: 0.95rem;
-      margin-top: 4px;
+      letter-spacing: 1px;
     }
 
     .ejercicio-principal {
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 12px;
-      padding: 1.2rem;
+      background: rgba(192, 38, 211, 0.15);
+      border: 2px solid var(--fuerza);
+      border-radius: 14px;
+      padding: 1.4rem;
       text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .ejercicio-principal h3 {
-      color: var(--fuerza);
-      font-size: 1.1rem;
-      margin-bottom: 8px;
+      margin: 1.2rem 0;
     }
 
     .rm {
       background: var(--fuerza);
-      color: black;
+      color: white;
       font-weight: 700;
-      padding: 4px 14px;
-      border-radius: 9999px;
+      padding: 6px 18px;
+      border-radius: 50px;
       display: inline-block;
-      font-size: 1rem;
-    }
-
-    ul {
-      list-style: none;
+      margin-top: 8px;
+      font-size: 1.1rem;
     }
 
     li {
-      padding: 12px 0;
+      padding: 14px 0;
       border-bottom: 1px solid #222;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
 
     li:last-child { border-bottom: none; }
 
-    .rotacion {
-      color: var(--accent);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 1rem;
-    }
-
     .optional {
-      background: rgba(251, 191, 36, 0.08);
-      border: 1px dashed var(--core);
-      padding: 1.2rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      color: #ddd;
+      background: rgba(234, 179, 8, 0.1);
+      border: 2px dashed var(--core);
+      padding: 1.5rem;
+      border-radius: 14px;
+      margin-top: 1rem;
     }
 
     .footer-note {
       text-align: center;
-      margin-top: 3rem;
-      color: var(--text2);
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 900px) {
-      .bloques { grid-template-columns: 1fr; }
-      h1 { font-size: 2.3rem; }
+      margin-top: 4rem;
+      color: #666;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Circuito de Entrenamiento</h1>
+    <h1>CIRCUITO DE ENTRENAMIENTO</h1>
     
     <div class="bloques">
       
-      <!-- Bloque de Fuerza -->
+      <!-- Fuerza -->
       <div class="bloque fuerza">
         <div class="header">
           <div class="icon">🏋️</div>
           <div>
             <div class="title">Bloque de Fuerza</div>
-            <div class="subtitle">3 personas</div>
+            <div style="color:#aaa;">3 personas</div>
           </div>
         </div>
-        
         <div class="ejercicio-principal">
-          <h3>Ejercicio Principal</h3>
-          <strong>Peso Muerto</strong><br>
+          <strong style="font-size:1.3rem;">Peso Muerto</strong><br>
           <span class="rm">85% RM</span>
         </div>
-        
         <p><strong>Grupo:</strong> 3 atletas</p>
-        <p><strong>Intensidad:</strong> Alta — 85% RM</p>
+        <p><strong>Intensidad:</strong> Alta</p>
       </div>
 
-      <!-- Circuito de Complementos -->
+      <!-- Complementos -->
       <div class="bloque complementos">
         <div class="header">
           <div class="icon">🔄</div>
           <div>
             <div class="title">Circuito de Complementos</div>
-            <div class="subtitle">4 personas • Rotación por estaciones</div>
+            <div style="color:#aaa;">4 personas • Rotación</div>
           </div>
         </div>
-        
-        <ul>
-          <li>1. Remo unilateral mancuerna</li>
-          <li>2. Airbike</li>
-          <li>3. Push press + Puente glúteo unilateral</li>
-          <li>4. Farmer</li>
-        </ul>
-        
-        <div class="rotacion">
-          <span>● ● ●</span> Rotación por estaciones
+        <ol style="padding-left: 20px; font-size:1.1rem;">
+          <li>Remo unilateral mancuerna</li>
+          <li>Airbike</li>
+          <li>Push press + Puente glúteo unilateral</li>
+          <li>Farmer</li>
+        </ol>
+      </div>
+
+      <!-- Core -->
+      <div class="bloque core">
+        <div class="header">
+          <div class="icon">🧘</div>
+          <div>
+            <div class="title">Bloque Core</div>
+            <div style="color:#aaa;">Opcional • Si sobra tiempo</div>
+          </div>
+        </div>
+        <div class="optional">
+          <strong>Ejercicios de Core o Cardio complementario</strong><br><br>
+          • Planchas, abdominales, russian twists...<br>
+          • Cardio complementario
         </div>
       </div>
 
-      <!-- Bloque Core -->
-      <div class="bloque core">
-        <div class="header">
-          <div class="icon">🏋️‍♀️</div>
-          <div>
-            <div class="title">Bloque Core</div>
-            <div class="subtitle">Opcional • Si sobra tiempo</div>
-          </div>
-        </div>
-        
-        <div class="optional">
-          <strong>Bloque opcional</strong><br><br>
-          Ejercicios de core<br>
-          o cardio complementario
-          <hr style="margin: 12px 0; border-color: #333;">
-          • Core — planchas, abdominales...<br>
-          • Cardio complementario
-        </div>
-        
-        <p style="margin-top: 1rem; font-size:0.9rem; color:var(--text2);">
-          Se activa solo si hay tiempo tras los bloques principales.
-        </p>
-      </div>
     </div>
 
     <div class="footer-note">
-      Centro de Entrenamiento Funcional • Reto diseñado por Fran Navarro
+      Centro de Entrenamiento Funcional • Fran Navarro
     </div>
   </div>
 </body>
